@@ -25,7 +25,7 @@ Source: ".\README.en.md"; DestDir: "{app}"; Flags: ignoreversion
 
 [Registry]
 Root: HKCR; Subkey: "f78fk-dnssec"; Flags: uninsdeletekey
-Root: HKCR; Subkey: "f78fk-dnssec"; ValueType: string; ValueName: ""; ValueData: "URL:F78FK DNSSEC Protocol"
+Root: HKCR; Subkey: "f78fk-dnssec"; ValueType: string; ValueName: ""; ValueData: "URL:F78FK-DNSSEC Protocol"
 Root: HKCR; Subkey: "f78fk-dnssec"; ValueType: string; ValueName: "URL Protocol"; ValueData: ""
 Root: HKCR; Subkey: "f78fk-dnssec\shell\open\command"; ValueType: string; ValueData: """{app}\F78FK-DNSSEC-Checker.exe"" ""%1"""
 

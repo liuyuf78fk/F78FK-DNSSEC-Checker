@@ -11,6 +11,8 @@
 ## 🖥️ 系统支持
 - Windows 10
 - Windows 11
+- Linux (AMD64)
+- macOS (ARM64)
 
 ## 🚀 安装与使用
 1. **下载安装包**：

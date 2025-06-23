@@ -23,13 +23,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 F78FK-DNSSEC 验证工具 - 用于诊断网络 DNS 是否完整支持 DNSSEC 安全扩展标准
 版权所有 (C) 2025  Liu Yu <f78fk@live.com>
 
-本程序是自由软件：您可以根据自由软件基金会发布的GNU通用公共许可证条款
-对其进行修改或分发，许可证版本3或（按您的选择）任何更高版本。
+本程序是自由软件：您可以根据自由软件基金会发布的 GNU 通用公共许可证第 3 版，
+或（由您自行选择）任何更高版本的条款，自由地修改和分发本程序。
 
 本程序基于使用目的分发，但没有任何担保；包括适销性或特定用途适用性担保。
 详细条款请参阅GNU通用公共许可证。
 
-您应已随本程序收到GNU通用公共许可证的副本。如果没有，请参阅：
+您应已随本程序收到GNU通用公共许可证的副本。如果没有, 请参阅:
 <https://www.gnu.org/licenses/>
 """
 
@@ -45,8 +45,16 @@ import traceback
 import re
 import sys
 import os
+import platform
+import shutil
 
-DIG_PATH = "dig.exe"
+
+IS_WINDOWS = platform.system() == "Windows"
+
+if IS_WINDOWS:
+    DIG_PATH = "dig.exe"
+else:
+    DIG_PATH = shutil.which("dig")
 
 
 def run_dig(args):
@@ -195,6 +203,7 @@ async def main():
 
 
 if __name__ == "__main__":
+
     try:
         asyncio.run(main())
     except RuntimeError:

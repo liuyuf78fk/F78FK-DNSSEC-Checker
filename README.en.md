@@ -11,6 +11,8 @@ A backend service that verifies complete DNSSEC protocol support on your network
 ## 🖥️ System Requirements
 - Windows 10
 - Windows 11
+- Linux (AMD64)
+- macOS (ARM64)
 
 ## 🚀 Installation & Usage
 1. **Download installer**:
