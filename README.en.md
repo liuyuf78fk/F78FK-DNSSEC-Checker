@@ -30,3 +30,38 @@ A backend service that verifies complete DNSSEC protocol support on your network
 
 ## 🔒 Security Notice
 - Fully open-source code with no backdoors - users may audit the code
+
+
+<br>
+
+### 🔍 Verifying Releases
+
+To ensure the authenticity and integrity of the files you download, please follow these verification steps:
+
+#### 1. Import our public GPG key
+
+Run the following command to fetch and import our official public key from the Ubuntu keyserver:
+
+```bash
+gpg --keyserver keyserver.ubuntu.com --recv-keys 9DDB7DB5ACD5B60A
+```
+
+####  2. Verify the signature on the checksum file
+
+Check that the checksum file is correctly signed by us:
+
+```bash
+gpg --verify sha256sums.asc
+```
+
+You should see a message indicating a good signature from `F78FK <f78fk@live.com>`.
+
+####  3. Verify the SHA256 hashes of the downloaded files
+
+Run the following command to confirm that your downloaded files match the official checksums:
+
+```bash
+sha256sum -c SHA256SUMS
+```
+
+If all files pass the checksum verification, your downloads are authentic and untampered.
