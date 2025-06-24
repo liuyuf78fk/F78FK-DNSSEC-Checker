@@ -10,7 +10,6 @@ OS_NAME="linux"
 pyinstaller \
   --onefile \
   --name "$APP_NAME" \
-  --onefile --add-binary "/lib/x86_64-linux-gnu/libpython3.10.so:." \
   "$PY_FILE"
 
 mkdir -p release

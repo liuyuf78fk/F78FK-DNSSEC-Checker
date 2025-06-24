@@ -59,8 +59,11 @@ else:
 
 def run_dig(args):
     try:
+        clean_env = os.environ.copy()
+        clean_env.pop("LD_LIBRARY_PATH", None)
+
         completed = subprocess.run(
-            [DIG_PATH] + args, capture_output=True, text=True, timeout=10
+            [DIG_PATH] + args, capture_output=True, text=True, timeout=10, env=clean_env
         )
         if completed.returncode != 0:
             return None, completed.stderr.strip()
