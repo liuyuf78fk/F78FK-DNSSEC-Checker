@@ -9,8 +9,8 @@
 - 安装后, 可以访问 [ip.f78fk.com/dnssec](ip.f78fk.com/dnssec) 开始检测
 
 ## 🖥️ 系统支持
-- Windows 10
-- Windows 11
+- Windows 10 (AMD64)
+- Windows 11 (AMD64)
 - Linux (AMD64)
 - macOS (ARM64)
 

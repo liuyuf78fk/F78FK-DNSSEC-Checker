@@ -9,8 +9,8 @@ A backend service that verifies complete DNSSEC protocol support on your network
 - After installation, visit [ip.f78fk.com/dnssec](https://ip.f78fk.com/dnssec) to run detection
 
 ## 🖥️ System Requirements
-- Windows 10
-- Windows 11
+- Windows 10 (AMD64)
+- Windows 11 (AMD64)
 - Linux (AMD64)
 - macOS (ARM64)
 
