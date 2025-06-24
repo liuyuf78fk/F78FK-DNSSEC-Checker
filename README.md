@@ -6,7 +6,7 @@
 
 ## ✨ 功能
 - 检测当前网络的 DNS 是否完整支持 **DNSSEC**
-- 安装后, 可以访问 [ip.f78fk.com/dnssec](ip.f78fk.com/dnssec) 开始检测
+- 安装后, 可以访问 [f78fk.com](https://ip.f78fk.com/dnssec) 开始检测
 
 ## 🖥️ 系统支持
 - Windows 10 (AMD64)
@@ -15,12 +15,32 @@
 - macOS (ARM64)
 
 ## 🚀 安装与使用
-1. **下载安装包**：
-   - 从 [Releases 页面](https://github.com/liuyuf78fk/F78FK-DNSSEC-Checker/releases) 获取 `F78FK-DNSSEC-Setup.exe`
-2. **运行安装向导**：
-   - 双击安装程序，按提示完成安装
-3. **开始检测**：
-   - 打开 [ip.f78fk.com/dnssec](https://ip.f78fk.com/dnssec)，页面将自动调用本程序检测您的网络是否完整支持 DNSSEC 安全扩展标准
+
+1. **下载安装包**  
+   - 从 [Releases](https://github.com/liuyuf78fk/F78FK-DNSSEC-Checker/releases) 获取您的操作系统平台对应的可执行文件
+
+2. **Windows**  
+   - 双击 `F78FK-DNSSEC-Setup.exe`,按提示完成安装
+   - 安装完成后,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可,浏览器会自动调用本程序进行检测
+
+3. **Linux**  
+   - 进入下载目录,赋予执行权限：  
+     ```bash
+     chmod +x f78fk_dnssec_checker_<version>_amd64-linux
+     ```  
+   - 运行程序：  
+     ```bash
+     ./f78fk_dnssec_checker_<version>_amd64-linux
+     ```  
+   - 程序运行后,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可
+
+4. **macOS**  
+   - 本项目提供两种版本供选择,安装时,根据喜好拖动其中一种安装即可
+   - **命令行版**  
+     - 双击运行该命令行程序后,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可
+   - **常规应用程序版（带 F 图标）**  
+     - 安装后同 Windows 一样,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可,浏览器会自动调用本程序进行检测
+   - Safari 浏览器目前不支持, 推荐使用 Firefox
 
 ## 📜 许可证与依赖
 - **本软件**：遵循 [GNU GPL 3.0](./LICENSE)
@@ -54,14 +74,16 @@ gpg --keyserver keyserver.ubuntu.com --recv-keys 9DDB7DB5ACD5B60A
 gpg --verify sha256sums.asc
 ```
 
-您应看到显示来自 `F78FK <f78fk@live.com>` 的有效签名。
+您应看到显示来自 `F78FK <f78fk@live.com>` 的有效签名
 
-#### 3. 校验文件 SHA256 哈希
-
-执行以下命令，确认下载文件与官方校验值一致：
+#### 3. 导出纯文本的 SHA256 校验文件
 
 ```bash
-sha256sum -c SHA256SUMS
+gpg --decrypt sha256sums.asc > sha256sums
 ```
 
-所有文件校验通过后，说明您的下载文件是安全无篡改的。
+#### 4. 用纯文本文件对下载的文件做完整性校验
+
+```bash
+sha256sum -c sha256sums
+```
