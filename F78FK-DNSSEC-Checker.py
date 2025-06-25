@@ -33,7 +33,7 @@ F78FK-DNSSEC 验证工具 - 用于诊断网络 DNS 是否完整支持 DNSSEC 安
 <https://www.gnu.org/licenses/>
 """
 
-__version__ = "1.0.0"
+__version__ = "1.0.2"
 __author__ = "Liu Yu"
 __license__ = "GPLv3"
 
@@ -136,6 +136,17 @@ def determine_result(nic, failed):
 
     if not nic["debug"].get("output") or not failed["debug"].get("output"):
         logs.append("Missing dig output — possible network issue.")
+        return {
+            "result": "unknown",
+            "logs": logs,
+            "nic": nic,
+            "failed": failed,
+            "error": None,
+        }
+
+    refused_states = {"REFUSED", "FORMERR", "NOTIMP"}
+    if nic["status"] in refused_states or failed["status"] in refused_states:
+        logs.append(f"Unknown state due to refused/formerr/notimp status: nic={nic['status']}, failed={failed['status']}")
         return {
             "result": "unknown",
             "logs": logs,

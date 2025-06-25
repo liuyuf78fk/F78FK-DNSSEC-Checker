@@ -1,6 +1,6 @@
 [Setup]
 AppName=F78FK-DNSSEC-Checker
-AppVersion=1.0.0
+AppVersion=1.0.2
 DefaultDirName={pf}\F78FK\F78FK-DNSSEC
 DisableProgramGroupPage=yes
 OutputDir=.

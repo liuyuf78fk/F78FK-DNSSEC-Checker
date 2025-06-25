@@ -3,7 +3,7 @@ set -e
 
 APP_NAME="F78FK-DNSSEC-Checker"
 PY_FILE="${APP_NAME}.py"
-VERSION="1.0.1"
+VERSION="1.0.2"
 ARCH="amd64"
 OS_NAME="linux"
 

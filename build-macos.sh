@@ -11,7 +11,7 @@ ICON_FILE="${APP_NAME}.icns"
 INFO_PLIST="Info.plist"
 
 # Customize version and architecture here
-VERSION="1.0.1"
+VERSION="1.0.2"
 ARCH="arm64"
 
 # Final output file name
