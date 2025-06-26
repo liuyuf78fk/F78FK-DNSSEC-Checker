@@ -33,9 +33,12 @@ F78FK-DNSSEC 验证工具 - 用于诊断网络 DNS 是否完整支持 DNSSEC 安
 <https://www.gnu.org/licenses/>
 """
 
-__version__ = "1.0.2"
+__version__ = "1.0.3"
 __author__ = "Liu Yu"
 __license__ = "GPLv3"
+
+PORT = 11111
+HOST = "127.0.0.1"
 
 import asyncio
 import websockets
@@ -119,59 +122,87 @@ def query_domain(domain, dig_args):
 
 
 def determine_result(nic, failed):
+    """
+    Determine DNSSEC validation result based on dig output of nic.cz and dnssec-failed.org.
+
+    Parameters:
+        nic (dict): Result of querying nic.cz (a DNSSEC-valid domain).
+        failed (dict): Result of querying dnssec-failed.org (intentionally broken DNSSEC domain).
+
+    Returns:
+        dict: {
+            "result": "secure" | "medium" | "insecure" | "unknown" | "tool-error",
+            "logs": [str],
+            "nic": dict,
+            "failed": dict,
+            "error": str or None
+        }
+    """
     logs = []
     logs.append(f"Parsed nic.cz: AD={nic['ad']}, Status={nic['status']}")
     logs.append(
         f"Parsed dnssec-failed.org: AD={failed['ad']}, Status={failed['status']}"
     )
 
+    # Helper to generate consistent return result
+    def make_result(result, message=None):
+        if message:
+            logs.append(message)
+        return {
+            "result": result,
+            "logs": logs,
+            "nic": nic,
+            "failed": failed,
+            "error": (
+                nic["error"] or failed["error"] if result == "tool-error" else None
+            ),
+        }
+
+    # If dig failed for any domain (tool or subprocess error)
     if nic["error"] or failed["error"]:
-        return {
-            "result": "tool-error",
-            "logs": logs,
-            "nic": nic,
-            "failed": failed,
-            "error": nic["error"] or failed["error"],
-        }
+        return make_result("tool-error")
 
+    # If dig output is missing
     if not nic["debug"].get("output") or not failed["debug"].get("output"):
-        logs.append("Missing dig output — possible network issue.")
-        return {
-            "result": "unknown",
-            "logs": logs,
-            "nic": nic,
-            "failed": failed,
-            "error": None,
-        }
+        return make_result("unknown", "Missing dig output — possible network issue.")
 
+    # If either result is a refused or malformed response
     refused_states = {"REFUSED", "FORMERR", "NOTIMP"}
     if nic["status"] in refused_states or failed["status"] in refused_states:
-        logs.append(f"Unknown state due to refused/formerr/notimp status: nic={nic['status']}, failed={failed['status']}")
-        return {
-            "result": "unknown",
-            "logs": logs,
-            "nic": nic,
-            "failed": failed,
-            "error": None,
-        }
+        return make_result(
+            "unknown",
+            f"Unknown state due to refused/formerr/notimp status: nic={nic['status']}, failed={failed['status']}",
+        )
 
+    # If dnssec-failed.org resolves successfully, DNSSEC is not enforced
+    if failed["status"] == "NOERROR":
+        return make_result("insecure", "dnssec-failed.org: NOERROR.")
+
+    # If nic.cz could not be resolved successfully, no DNSSEC conclusion possible
+    if nic["status"] != "NOERROR":
+        return make_result(
+            "unknown",
+            f"Unknown: nic.cz could not be resolved (status: {nic['status']}).",
+        )
+
+    # Now both statuses are OK — begin DNSSEC validation check
     if nic["ad"] and not failed["ad"] and failed["status"] == "SERVFAIL":
-        result = "secure"
-        logs.append("Secure: local resolver validates DNSSEC correctly.")
+        return make_result(
+            "secure", "Secure: local resolver validates DNSSEC correctly."
+        )
 
     elif not nic["ad"] and failed["status"] == "SERVFAIL":
-        result = "medium"
-        logs.append("Medium: local resolver does not validate, but upstream does.")
+        return make_result(
+            "medium", "Medium: local resolver does not validate, but upstream does."
+        )
 
     elif failed["status"] != "SERVFAIL":
-        result = "insecure"
-        logs.append("Insecure: failed domain resolved without SERVFAIL.")
+        return make_result(
+            "insecure", "Insecure: failed domain resolved without SERVFAIL."
+        )
 
-    else:
-        result = "unknown"
-        logs.append("Unknown state: unable to determine DNSSEC status.")
-
-    return {"result": result, "logs": logs, "nic": nic, "failed": failed, "error": None}
+    # If none of the above match, return unknown
+    return make_result("unknown", "Unknown state: unable to determine DNSSEC status.")
 
 
 async def handler(websocket):
@@ -206,18 +237,21 @@ async def handler(websocket):
 
 
 async def main():
-
-    print("[  OK  ] F78FK-DNSSEC WebSocket (port 11111)")
     try:
-        async with websockets.serve(handler, "127.0.0.1", 11111):
-            await asyncio.Future()
-    except Exception:
-        print("[ERROR] WebSocket startup failed:")
+        async with websockets.serve(handler, HOST, PORT):
+            print(
+                f"[  OK  ] F78FK-DNSSEC: WebSocket server listening on port {PORT} (v{__version__})"
+            )
+            await asyncio.Future()  # Run forever
+    except OSError as e:
+        # Typical failure: port already in use
+        print(f"[FAILED] F78FK-DNSSEC: Failed to bind port {PORT} ({e.strerror})")
+    except Exception as e:
+        print(f"[FAILED] F78FK-DNSSEC: Unexpected error starting server")
         traceback.print_exc()
 
 
 if __name__ == "__main__":
-
     try:
         asyncio.run(main())
     except RuntimeError:
