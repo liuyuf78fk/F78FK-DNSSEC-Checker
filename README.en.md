@@ -35,11 +35,21 @@ A program for detecting whether the current network fully supports the DNSSEC pr
    - After running the program, open your browser and visit [f78fk.com](https://ip.f78fk.com/dnssec)
 
 4. **macOS**  
-   - This project provides two versions to choose from. During installation, drag to install one based on your preference  
-   - **Command Line Version**  
-     - Double-click to run the command line program, then open your browser and visit [f78fk.com](https://ip.f78fk.com/dnssec)  
-   - **Regular Application Version (with F icon)**  
-     - After installation, similar to Windows, open your browser and visit [f78fk.com](https://ip.f78fk.com/dnssec). The browser will automatically invoke the program for detection  
+   - Navigate to the download directory and extract the archive
+     ```bash
+     tar -xzvf f78fk_dnssec_checker_<version>_arm64-macos.tar.gz
+     ```
+   - Grant execute permission and run the program：
+     ```bash
+     cd DNSSEC-Checker
+	 ```
+	 ```bash
+	 chmod +x run-macos.sh
+	 ```
+	 ```bash
+	 ./run-macos.sh
+     ```
+   - After running the program, open your browser and visit [f78fk.com](https://ip.f78fk.com/dnssec)
    - Safari browser is currently not supported; Firefox is recommended
 
 ## 📜 License & Dependencies

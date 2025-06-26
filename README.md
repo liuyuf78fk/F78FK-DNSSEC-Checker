@@ -35,11 +35,21 @@
    - 程序运行后,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可
 
 4. **macOS**  
-   - 本项目提供两种版本供选择,安装时,根据喜好拖动其中一种安装即可
-   - **命令行版**  
-     - 双击运行该命令行程序后,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可
-   - **常规应用程序版（带 F 图标）**  
-     - 安装后同 Windows 一样,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可,浏览器会自动调用本程序进行检测
+   - 进入下载目录,解压文件
+     ```bash
+     tar -xzvf f78fk_dnssec_checker_<version>_arm64-macos.tar.gz
+     ```
+   - 赋予执行权限并运行程序：
+     ```bash
+     cd DNSSEC-Checker
+	 ```
+	 ```bash
+	 chmod +x run-macos.sh
+	 ```
+	 ```bash
+	 ./run-macos.sh
+     ```
+   - 程序运行后,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可
    - Safari 浏览器目前不支持, 推荐使用 Firefox
 
 ## 📜 许可证与依赖
