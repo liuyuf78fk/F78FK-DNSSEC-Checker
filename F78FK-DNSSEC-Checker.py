@@ -209,9 +209,9 @@ async def handler(websocket):
 
     print("[*] New WebSocket connection from browser")
 
-    nic_result = query_domain("nic.cz", ["+dnssec", "+multi", "nic.cz", "A"])
+    nic_result = query_domain("nic.cz", ["+dnssec", "+time=3", "+tries=2", "+multi", "nic.cz", "A"])
     failed_result = query_domain(
-        "dnssec-failed.org", ["+dnssec", "dnssec-failed.org", "A"]
+        "dnssec-failed.org", ["+dnssec","+time=3", "+tries=2", "dnssec-failed.org", "A"]
     )
 
     print("\n[DEBUG] nic.cz query details:")
