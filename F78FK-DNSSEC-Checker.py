@@ -50,6 +50,7 @@ import sys
 import os
 import platform
 import shutil
+import signal
 
 
 IS_WINDOWS = platform.system() == "Windows"
@@ -205,13 +206,28 @@ def determine_result(nic, failed):
     return make_result("unknown", "Unknown state: unable to determine DNSSEC status.")
 
 
+def setup_signal_handlers():
+    def handle_signal(sig, frame):
+        print(f"\n[INFO] Received signal {sig}, shutting down gracefully...")
+        sys.exit(0)
+
+    signal.signal(signal.SIGINT, handle_signal)
+    try:
+        signal.signal(signal.SIGTERM, handle_signal)
+    except AttributeError:
+        pass  # Windows may not support SIGTERM
+
+
 async def handler(websocket):
 
     print("[*] New WebSocket connection from browser")
 
-    nic_result = query_domain("nic.cz", ["+dnssec", "+time=3", "+tries=2", "+multi", "nic.cz", "A"])
+    nic_result = query_domain(
+        "nic.cz", ["+dnssec", "+time=3", "+tries=2", "+multi", "nic.cz", "A"]
+    )
     failed_result = query_domain(
-        "dnssec-failed.org", ["+dnssec","+time=3", "+tries=2", "dnssec-failed.org", "A"]
+        "dnssec-failed.org",
+        ["+dnssec", "+time=3", "+tries=2", "dnssec-failed.org", "A"],
     )
 
     print("\n[DEBUG] nic.cz query details:")
@@ -252,6 +268,7 @@ async def main():
 
 
 if __name__ == "__main__":
+    setup_signal_handlers()
     try:
         asyncio.run(main())
     except RuntimeError:
