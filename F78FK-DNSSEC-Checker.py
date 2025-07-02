@@ -33,7 +33,7 @@ F78FK-DNSSEC 验证工具 - 用于诊断网络 DNS 是否完整支持 DNSSEC 安
 <https://www.gnu.org/licenses/>
 """
 
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 __author__ = "Liu Yu"
 __license__ = "GPLv3"
 

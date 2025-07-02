@@ -5,7 +5,7 @@ APP_NAME="F78FK-DNSSEC-Checker"
 PY_FILE="${APP_NAME}.py"
 ICON_FILE="${APP_NAME}.icns"
 
-VERSION="1.0.3"
+VERSION="1.0.4"
 ARCH="arm64"
 OUTPUT_NAME="f78fk_dnssec_checker_${VERSION}_${ARCH}-macos"
 
