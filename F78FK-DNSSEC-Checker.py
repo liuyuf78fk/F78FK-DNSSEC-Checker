@@ -209,6 +209,7 @@ def determine_result(nic, failed):
 def setup_signal_handlers():
     def handle_signal(sig, frame):
         print(f"\n[INFO] Received signal {sig}, shutting down gracefully...")
+        print("\n[INFO] Waiting for browser to close...")
         sys.exit(0)
 
     signal.signal(signal.SIGINT, handle_signal)
