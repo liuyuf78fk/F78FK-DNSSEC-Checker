@@ -18,19 +18,6 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-===========================================================================
-F78FK-DNSSEC 验证工具 - 用于诊断网络 DNS 是否完整支持 DNSSEC 安全扩展标准
-版权所有 (C) 2025  Liu Yu <f78fk@live.com>
-
-本程序是自由软件：您可以根据自由软件基金会发布的 GNU 通用公共许可证第 3 版，
-或（由您自行选择）任何更高版本的条款，自由地修改和分发本程序。
-
-本程序基于使用目的分发，但没有任何担保；包括适销性或特定用途适用性担保。
-详细条款请参阅GNU通用公共许可证。
-
-您应已随本程序收到GNU通用公共许可证的副本。如果没有, 请参阅:
-<https://www.gnu.org/licenses/>
 """
 
 __version__ = "1.0.4"
