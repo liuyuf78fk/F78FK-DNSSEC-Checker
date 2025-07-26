@@ -1,6 +1,6 @@
 #!/bin/bash
 
-target=$(find . -maxdepth 1 -type f -iname "*macos*" | head -n 1)
+target=$(find . -maxdepth 1 -type f -iname "*arm64-macos*" | head -n 1)
 
 if [ -z "$target" ]; then
     echo "Error: Target file not found."
