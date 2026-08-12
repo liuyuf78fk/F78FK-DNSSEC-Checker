@@ -2,11 +2,23 @@
 
 [English](./README.en.md)  <!-- 跳转到英文版 -->
 
-用于检测当前网络是否完整支持 DNSSEC 协议，是为了给 [ip.f78fk.com/dnssec](https://ip.f78fk.com/dnssec) 提供后端检测服务的程序
+一个本地辅助程序，用于检测你**当前网络的 DNS 解析器**是否执行 **DNSSEC 校验**（即是否能正确拦截签名无效/伪造 `bogus` 的域名）。
+
+本程序配合网站 **[ip.f78fk.com/dnssec](https://ip.f78fk.com/dnssec)** 一起使用。
+
+> ⚠️ **注意**：本工具测试的是你**本地网络 / DNS 服务器的功能与能力**，而不是某个具体网站域名的 DNSSEC 配置是否正确。
+
+
+## ❓ 为什么需要本地程序？
+
+由于内置缓存或自带的 DoH（DNS-over-HTTPS）功能，浏览器经常会绕过系统默认的 DNS 设置。此外，浏览器本身并不亲自执行底层的 DNSSEC 签名校验。
+
+为了准确测试你的路由器或运营商（ISP）DNS 解析器是否严格执行了 DNSSEC 校验，本轻量级本地工具通过 `dig` 命令直接向你系统当前生效的解析器发起查询——分别测试两个基准域名（一个具有合法 DNSSEC 签名，另一个签名故意配置损坏/`bogus`）——并将测试结果发送至网页端显示。
+
 
 ## ✨ 功能
 - 检测当前网络的 DNS 是否完整支持 **DNSSEC**
-- 安装后, 可以访问 [f78fk.com](https://ip.f78fk.com/dnssec) 开始检测
+- 安装后, 可以访问 [ip.f78fk.com/dnssec](https://ip.f78fk.com/dnssec) 开始检测
 
 ## 🖥️ 系统支持
 - Windows 10 (AMD64)
@@ -21,7 +33,7 @@
 
 2. **Windows**  
    - 双击 `F78FK-DNSSEC-Setup.exe`,按提示完成安装
-   - 安装完成后,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可,浏览器会自动调用本程序进行检测
+   - 安装完成后,打开浏览器访问 [ip.f78fk.com/dnssec](https://ip.f78fk.com/dnssec) 即可,浏览器会自动调用本程序进行检测
 
 3. **Linux**  
    - 进入下载目录,赋予执行权限：  
@@ -32,7 +44,7 @@
      ```bash
      ./f78fk_dnssec_checker_<version>_amd64-linux
      ```  
-   - 程序运行后,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可
+   - 程序运行后,打开浏览器访问 [ip.f78fk.com/dnssec](https://ip.f78fk.com/dnssec) 即可
 
 4. **macOS**  
    - 进入下载目录,解压文件
@@ -49,7 +61,7 @@
 	 ```bash
 	 ./run-macos.sh
      ```
-   - 程序运行后,打开浏览器访问 [f78fk.com](https://ip.f78fk.com/dnssec) 即可
+   - 程序运行后,打开浏览器访问 [ip.f78fk.com/dnssec](https://ip.f78fk.com/dnssec) 即可
    - Safari 浏览器目前不支持, 推荐使用 Firefox
 
 ## 📜 许可证与依赖
